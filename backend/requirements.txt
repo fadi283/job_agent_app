@@ -1,1 +1,10 @@
-# Python requirements
+fastapi
+uvicorn
+sqlalchemy
+asyncpg
+psycopg2-binary
+pydantic
+pydantic-settings
+python-dotenv
+langgraph
+openai
