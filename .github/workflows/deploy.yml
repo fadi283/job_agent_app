@@ -1,0 +1,25 @@
+name: Production Deployment Pipeline
+
+on:
+  push:
+    branches:
+      - main # ה-Pipeline יופעל רק בעת דחיפת קוד לענף הראשי
+
+jobs:
+  deploy:
+    name: Deploy to Local Production Server
+    runs-on: [self-hosted, prod] # פנייה ממוקדת לסוכן שהגדרנו עם התוית prod
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4 # הורדת הקוד המעודכן לתוך השרת
+
+      - name: Deploy Infrastructure via Docker Compose
+        run: | # יצירת קובץ .env בסיסי לריצה אם הוא לא קיים בפרודקשן
+          if [ ! -f .env ]; then
+            echo "DATABASE_URL=postgresql://fadi_admin:my_secure_password@postgres:5432/job_agent_db" > .env
+            echo "MINIO_ENDPOINT=http://minio:9000" >> .env
+          fi
+          
+          # הרצה ובנייה מחדש של הקונטיינרים שהשתנו בצורה שקטה (detached)
+          docker compose up -d --build

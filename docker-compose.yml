@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: ankane/pgvector:latest
+    environment:
+      POSTGRES_USER: fadi_admin
+      POSTGRES_PASSWORD: my_secure_password
+      POSTGRES_DB: job_agent_db
+    ports:
+      - "5432:5432"
