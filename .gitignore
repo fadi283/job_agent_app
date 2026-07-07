@@ -1,5 +1,7 @@
 backend/venv/
 __pycache__/
-*.pyc
-.env
-.ideas/
+*.pdf
+*.docx
+postgres_data/
+minio_data/
+.git/

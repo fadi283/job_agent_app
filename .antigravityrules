@@ -1,0 +1,35 @@
+# Project System Architecture: AI Job Agent Suite
+
+## 1. Overview & Vision
+This is a scalable, multi-agent SaaS-ready application written in Python using strict Object-Oriented Programming (OOP) principles. The goal is to automate job tracking, resume optimization (RAG), and interview preparation. 
+
+## 2. Core Technical Stack
+- **Backend Framework:** FastAPI (Asynchronous, Type-safe with Pydantic).
+- **Database (Relational + Vector):** PostgreSQL with `pgvector` extension.
+- **Object Storage:** MinIO (Local S3-compatible) for storing generated PDFs and DOCX files.
+- **Agent Orchestration:** LangGraph
+- **Deployment Platform:** Docker Compose (Local Dev and Local Prod via GitHub Actions CI/CD Pipeline).
+
+## 3. Directory Layout & Domains (Domain-Driven Design)
+The project structure must strictly follow this scaffolding:
+project_root/
+├── .github/workflows/deploy.yml
+├── docker-compose.yml
+└── backend/
+    ├── requirements.txt
+    └── app/
+        ├── api/           # FastAPI endpoints & Pydantic schemas
+        ├── agents/        # OOP classes for Multi-Agent logic (Main Router, RAG, Prep)
+        ├── db/            # Database connections, SQLAlchemy models, and migrations
+        ├── integrations/  # External APIs (Gmail OAuth2, Telegram Bot, Scrapers)
+        └── services/      # Business logic (Document generation, File upload to MinIO)
+
+## 4. Multi-Agent Design Blueprint
+1. **Main Router Agent:** Class `MainRouterAgent`. Classifies user intent (text/links/Telegram) and routes tasks to sub-agents.
+2. **Resume & RAG Agent:** Class `ResumeRAGAgent`. Pulls past resume data from vector storage, references job descriptions, generates tailored text, and calls document compilation services.
+3. **Prep & Strategy Agent:** Class `InterviewPrepAgent`. Creates study plans based on delta analysis between the user profile and the target job description.
+
+## 5. Development Constraints (Rules of Engagement)
+- **Code Style:** Strict OOP, clean class hierarchies, explicit type-hinting, async/await for I/O operations and database queries.
+- **State Management:** Do not store business files inside PostgreSQL. Store only reference URLs pointing to MinIO buckets.
+- **No Hallucinations:** The RAG system must never inject false working experience or unearned degrees.
