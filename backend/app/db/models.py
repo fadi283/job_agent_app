@@ -11,6 +11,7 @@ class Job(Base):
     title = Column(String(255), nullable=False)
     company = Column(String(255), nullable=False)
     job_url = Column(Text, nullable=True)
+    job_description = Column(Text, nullable=True)
     status = Column(String(50), default="applied")
     manual_notes = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)

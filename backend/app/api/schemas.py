@@ -26,6 +26,7 @@ class JobBase(BaseModel):
     title: str
     company: str
     job_url: Optional[str] = None
+    job_description: Optional[str] = None
     status: Optional[str] = "applied"
     manual_notes: Optional[str] = None
 
@@ -49,6 +50,7 @@ class JobResponse(JobBase):
 # --- Agent Schemas ---
 class AgentRequest(BaseModel):
     user_input: str
+    job_id: Optional[int] = None
     job_description: Optional[str] = None
     company_info: Optional[str] = None
     past_experience: Optional[str] = None
