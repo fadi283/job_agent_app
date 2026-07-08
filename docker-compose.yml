@@ -16,6 +16,19 @@ services:
     volumes:
       - ./backend:/app
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    restart: unless-stopped
+    depends_on:
+      - backend
+
   postgres:
     image: ankane/pgvector:latest
     environment:
