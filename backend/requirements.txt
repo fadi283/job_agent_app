@@ -8,3 +8,6 @@ pydantic-settings
 python-dotenv
 langgraph
 openai
+pytest
+httpx
+pytest-asyncio
