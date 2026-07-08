@@ -71,6 +71,8 @@ jobs:
     steps:
       - name: Checkout repository (for docker-compose.yml)
         uses: actions/checkout@v4
+        with:
+          clean: false
       - name: Log in to the Container registry
         uses: docker/login-action@v3
         with:
