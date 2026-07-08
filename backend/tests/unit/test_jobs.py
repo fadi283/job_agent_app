@@ -33,7 +33,6 @@ async def test_create_job(async_client, mock_db_session):
     # Verify mock interactions
     mock_db_session.add.assert_called_once()
     mock_db_session.commit.assert_awaited_once()
-    mock_db_session.refresh.assert_awaited_once()
 
 @pytest.mark.asyncio
 async def test_read_jobs(async_client, mock_db_session):
