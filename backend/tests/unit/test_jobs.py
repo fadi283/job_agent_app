@@ -7,6 +7,13 @@ async def test_create_job(async_client, mock_db_session):
     # Setup mock
     # db.add is synchronous, db.commit is async, db.refresh is async
     
+    # Mock db.execute for the relationship reload
+    mock_result = MagicMock()
+    from datetime import datetime
+    mock_job = Job(id=1, title="Software Engineer", company="Tech Corp", created_at=datetime.utcnow())
+    mock_result.scalars.return_value.first.return_value = mock_job
+    mock_db_session.execute.return_value = mock_result
+    
     # Run request
     payload = {
         "title": "Software Engineer",
