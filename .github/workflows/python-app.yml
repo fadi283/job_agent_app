@@ -79,22 +79,13 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Create .env files if missing
+      - name: Load Production Secrets
         run: |
-          if [ ! -f .env ]; then
-            echo "DATABASE_URL=postgresql://fadi_admin:my_secure_password@postgres:5432/job_agent_db" > .env
-            echo "MINIO_ENDPOINT=http://minio:9000" >> .env
-          fi
+          # Copy the persistent secrets from the secure folder on the server
+          # Note: You must create these files manually on your server first!
+          cp /opt/job_agent_app/secrets/.env .
           mkdir -p backend
-          if [ ! -f backend/.env ]; then
-            echo "POSTGRES_USER=fadi_admin" > backend/.env
-            echo "POSTGRES_PASSWORD=my_secure_password" >> backend/.env
-            echo "POSTGRES_DB=job_agent_db" >> backend/.env
-            echo "DATABASE_URL=postgresql+asyncpg://fadi_admin:my_secure_password@postgres:5432/job_agent_db" >> backend/.env
-            echo "MINIO_ROOT_USER=admin" >> backend/.env
-            echo "MINIO_ROOT_PASSWORD=password123" >> backend/.env
-            echo "MINIO_ENDPOINT=http://minio:9000" >> backend/.env
-          fi
+          cp /opt/job_agent_app/secrets/backend.env backend/.env
       - name: Deploy with Docker Compose
         run: |
           docker compose pull
