@@ -5,7 +5,7 @@ from app.api.router import api_router
 app = FastAPI(
     title="Job Agent App API",
     description="Backend for the AI Job Agent Suite",
-    version="0.1.0"
+    version="0.1.1"
 )
 
 # CORS configuration
