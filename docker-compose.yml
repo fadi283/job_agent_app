@@ -1,6 +1,7 @@
 
 services:
   backend:
+    image: ghcr.io/fadi283/job-agent-backend:latest
     build: 
       context: ./backend
       dockerfile: Dockerfile
