@@ -114,3 +114,10 @@ jobs:
         run: |
           docker compose pull
           docker compose up -d --remove-orphans
+          
+      - name: Initialize Database Tables
+        run: |
+          # Wait for the database to be fully ready
+          sleep 5
+          # Run the initialization script inside the backend container
+          docker compose exec -e PYTHONPATH=. backend python app/db/init_db.py
