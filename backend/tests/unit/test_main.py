@@ -10,7 +10,7 @@ async def test_health_check():
     """
     # Note: For testing FastAPI with async endpoints, it's recommended to use httpx.AsyncClient
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
-        response = await ac.get("/health1")
+        response = await ac.get("/health")
         
     assert response.status_code == 200
     assert response.json() == {"status": "ok"}
