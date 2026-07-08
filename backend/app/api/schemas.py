@@ -10,6 +10,10 @@ class ResumeVersionBase(BaseModel):
 class ResumeVersionCreate(ResumeVersionBase):
     job_id: int
 
+class ResumeVersionUpdate(BaseModel):
+    minio_pdf_url: Optional[str] = None
+    minio_docx_url: Optional[str] = None
+
 class ResumeVersionResponse(ResumeVersionBase):
     id: int
     job_id: int
@@ -27,6 +31,13 @@ class JobBase(BaseModel):
 
 class JobCreate(JobBase):
     pass
+
+class JobUpdate(BaseModel):
+    title: Optional[str] = None
+    company: Optional[str] = None
+    job_url: Optional[str] = None
+    status: Optional[str] = None
+    manual_notes: Optional[str] = None
 
 class JobResponse(JobBase):
     id: int

@@ -4,7 +4,7 @@ from sqlalchemy.future import select
 
 from app.db.session import get_db
 from app.db.models import Job, ResumeVersion
-from app.api.schemas import ResumeVersionCreate, ResumeVersionResponse
+from app.api.schemas import ResumeVersionCreate, ResumeVersionResponse, ResumeVersionUpdate
 
 router = APIRouter()
 
@@ -21,3 +21,29 @@ async def create_resume_version(resume_in: ResumeVersionCreate, db: AsyncSession
     await db.commit()
     await db.refresh(new_resume)
     return new_resume
+
+@router.patch("/{resume_id}", response_model=ResumeVersionResponse)
+async def update_resume_version(resume_id: int, resume_in: ResumeVersionUpdate, db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(ResumeVersion).filter(ResumeVersion.id == resume_id))
+    resume = result.scalars().first()
+    if not resume:
+        raise HTTPException(status_code=404, detail="Resume version not found")
+        
+    update_data = resume_in.model_dump(exclude_unset=True)
+    for field, value in update_data.items():
+        setattr(resume, field, value)
+        
+    await db.commit()
+    await db.refresh(resume)
+    return resume
+
+@router.delete("/{resume_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_resume_version(resume_id: int, db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(ResumeVersion).filter(ResumeVersion.id == resume_id))
+    resume = result.scalars().first()
+    if not resume:
+        raise HTTPException(status_code=404, detail="Resume version not found")
+        
+    await db.delete(resume)
+    await db.commit()
+    return None

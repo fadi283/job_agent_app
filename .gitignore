@@ -7,3 +7,4 @@ minio_data/
 .git/
 .env
 backend/.env
+.antigravityrules
