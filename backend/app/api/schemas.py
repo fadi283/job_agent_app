@@ -45,3 +45,13 @@ class JobResponse(JobBase):
     resume_versions: List[ResumeVersionResponse] = []
     
     model_config = ConfigDict(from_attributes=True)
+
+# --- Agent Schemas ---
+class AgentRequest(BaseModel):
+    user_input: str
+    job_description: Optional[str] = None
+    company_info: Optional[str] = None
+    past_experience: Optional[str] = None
+
+class AgentResponse(BaseModel):
+    output: str
