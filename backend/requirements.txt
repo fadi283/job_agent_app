@@ -11,3 +11,4 @@ openai
 pytest
 httpx
 pytest-asyncio
+langchain-openai
