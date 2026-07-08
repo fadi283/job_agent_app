@@ -33,3 +33,6 @@ project_root/
 - **Code Style:** Strict OOP, clean class hierarchies, explicit type-hinting, async/await for I/O operations and database queries.
 - **State Management:** Do not store business files inside PostgreSQL. Store only reference URLs pointing to MinIO buckets.
 - **No Hallucinations:** The RAG system must never inject false working experience or unearned degrees.
+
+## 6. Conversations language:
+ - make our conversations in English 
